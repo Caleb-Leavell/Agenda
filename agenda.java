@@ -13,7 +13,6 @@ class Task {
       this.deadlineTime = deadlineTime;
     }
 
-    String returnName() {return name;}
 }
 
 public class agenda {
@@ -23,7 +22,7 @@ public class agenda {
     int optionChosen;
     Task task1 = new Task("hw 1", "it's hw 1", "5/5/7", "5:00");
 
-    System.out.println(task1.returnName());
+    System.out.println(task1.name);
 
     //Display Home Screen
     System.out.println("\nAGENDA\n\nInput Options:\n-View Current Tasks: 0\n-Add a new Task: 1\n");
