@@ -16,7 +16,7 @@ class Task {
 }
 
 public class agenda {
-  public static void main(String[] args) {
+  public static void main(String[] argv) {
     Scanner scnr = new Scanner(System.in);
 
     Task[] tasks = new Task[1];
@@ -39,8 +39,10 @@ public class agenda {
   public static void home(Scanner scnr, Task[] tasks) {
     int optionChosen;
 
-    System.out.println("\nAGENDA\n\nInput Options:\n-View Current Tasks: 0\n-Add a new Task: 1\n");
-
+    //Display Home Screen
+    System.out.println("\nAGENDA\n\nInput Options:\n-View Current Tasks: 0\n-Add a new Task: 1\n-Mark a Task as Completed: 2\n-Exit: 4");
+    
+    //Get Input
     System.out.print("Choose Option: ");
     optionChosen = scnr.nextInt();
     System.out.println("");
