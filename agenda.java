@@ -26,11 +26,12 @@ public class agenda {
     home(scnr, tasks);
   }
 
-  //displays the names of each task; takes in the list of tasks
-  public static void displayTaskNames(Task[] tasks) {
+  //displays each task; takes in the list of tasks
+  public static void displayTasks(Task[] tasks) {
       if(tasks.length > 1) {
         for(int i = 0; i < tasks.length - 1; i ++) {
-          System.out.println(tasks[i].name);
+          System.out.println(tasks[i].deadlineDate + "at " + tasks[i].deadlineTime + " - " + tasks[i].name);
+          System.out.println("  " + tasks[i].description);
         }
       }
       else {
@@ -58,7 +59,7 @@ public class agenda {
 
     //display tasks
     if(optionChosen == 0) {
-      displayTaskNames(tasks);
+      displayTasks(tasks);
       home(scnr, tasks);
     }
 
@@ -68,6 +69,10 @@ public class agenda {
       tasks[tasks.length - 1] = new Task("", "", "", "");
       System.out.print("Task Name: ");
       tasks[tasks.length - 1].name = scnr.nextLine();
+      System.out.print("Date Due (dd/mm/yyyy): ");
+      tasks[tasks.length - 1].deadlineDate = scnr.nextLine();
+      System.out.print("Time Due (t:tt am/pm): ");
+      tasks[tasks.length - 1].deadlineTime = scnr.nextLine();
       System.out.print("Task Description: ");
       tasks[tasks.length - 1].description = scnr.nextLine();
 
