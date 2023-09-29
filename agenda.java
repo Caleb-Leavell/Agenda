@@ -1,10 +1,11 @@
 import java.util.Scanner;
 
+//Task Class
 class Task {
-    String name;
-    String description;
-    String deadlineDate;
-    String deadlineTime;
+    public String name;
+    public String description;
+    public String deadlineDate;
+    public String deadlineTime;
 
     public Task(String name, String description, String deadlineDate, String deadlineTime) {
       this.name = name;
@@ -19,12 +20,13 @@ public class agenda {
   public static void main(String[] argv) {
     Scanner scnr = new Scanner(System.in);
 
+    //tasks list
     Task[] tasks = new Task[1];
 
     home(scnr, tasks);
-    
   }
 
+  //displays the names of each task; takes in the list of tasks
   public static void displayTaskNames(Task[] tasks) {
       if(tasks.length > 1) {
         for(int i = 0; i < tasks.length - 1; i ++) {
@@ -36,6 +38,7 @@ public class agenda {
       }
   }
 
+  //home + get user input, takes in scnr and list of tasks
   public static void home(Scanner scnr, Task[] tasks) {
     int optionChosen;
 
@@ -50,13 +53,18 @@ public class agenda {
     doAppNavigation(optionChosen, tasks, scnr);
   }
 
+  //handles user input to navigate through app, takes in the option chosen by the user, the list of tasks, and scnr
   public static void doAppNavigation(int optionChosen, Task[] tasks, Scanner scnr) {
+
+    //display tasks
     if(optionChosen == 0) {
       displayTaskNames(tasks);
       home(scnr, tasks);
     }
 
+    //add task
     if(optionChosen == 1) {
+      scnr.nextLine();
       tasks[tasks.length - 1] = new Task("", "", "", "");
       System.out.print("Task Name: ");
       tasks[tasks.length - 1].name = scnr.nextLine();
@@ -67,13 +75,16 @@ public class agenda {
       for(int i = 0; i < tasks.length; i ++) {
         tempList[i] = tasks[i];
       }
-      tasks = tempList;
+      tasks = new Task[tempList.length];
+      for(int i = 0; i < tasks.length; i ++) {
+        tasks[i] = tempList[i];
+      }
+      System.out.println(tasks[0].name);
 
       home(scnr, tasks);
     }
 
-    if(optionChosen == 4) {
+    //exit program
       return;
-    }
   }
 }
