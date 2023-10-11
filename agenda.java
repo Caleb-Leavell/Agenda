@@ -18,6 +18,21 @@ class Task {
       this.deadlineDate = deadlineDate;
       this.deadlineTime = deadlineTime;
     }
+    public void getTimeDue() {
+      int timeColonIndex = this.deadlineTime.indexOf(':');
+      int[] dateSlashIndicies = {deadlineDate.indexOf('/'), deadlineDate.indexOf('/', deadlineDate.indexOf('/') + 1)};
+      this.hourDue = Integer.parseInt(this.deadlineTime.substring(0,timeColonIndex));
+      this.minuteDue = Integer.parseInt(this.deadlineTime.substring(timeColonIndex + 1, deadlineTime.indexOf(' ', timeColonIndex)));
+      this.monthDue = Integer.parseInt(this.deadlineDate.substring(0, dateSlashIndicies[0]));
+      this.dayDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[0] + 1, dateSlashIndicies[1]));
+      this.yearDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[1] + 1, deadlineDate.length()));
+
+      System.out.println("hour: " + this.hourDue);
+      System.out.println("minute: " + this.minuteDue);
+      System.out.println("day: " + this.dayDue);
+      System.out.println("month: " + this.monthDue);
+      System.out.println("year: " + yearDue);
+    }
 
 }
 
@@ -74,7 +89,7 @@ public class agenda {
       tasks[tasks.length - 1] = new Task("", "", "", "");
       System.out.print("Task Name: ");
       tasks[tasks.length - 1].name = scnr.nextLine();
-      System.out.print("Date Due (dd/mm/yyyy): ");
+      System.out.print("Date Due (mm/dd/yyyy): ");
       tasks[tasks.length - 1].deadlineDate = scnr.nextLine();
       System.out.print("Time Due (hh:mm am/pm): ");
       tasks[tasks.length - 1].deadlineTime = scnr.nextLine();
@@ -94,6 +109,9 @@ public class agenda {
       home(scnr, tasks);
     }
 
+    if(optionChosen == 2) {
+      tasks[0].getTimeDue();
+    }
     //exit program
       return;
   }
