@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 //Task Class
-class Task {
+class Task implements Comparable<Task>{
     public String name;
     public String description;
     public String deadlineDate;
@@ -26,12 +26,16 @@ class Task {
       this.monthDue = Integer.parseInt(this.deadlineDate.substring(0, dateSlashIndicies[0]));
       this.dayDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[0] + 1, dateSlashIndicies[1]));
       this.yearDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[1] + 1, deadlineDate.length()));
+    }
 
-      System.out.println("hour: " + this.hourDue);
-      System.out.println("minute: " + this.minuteDue);
-      System.out.println("day: " + this.dayDue);
-      System.out.println("month: " + this.monthDue);
-      System.out.println("year: " + yearDue);
+    public static Task[] sortTasks(Task[] tasks) {
+        Collections.sort(tasks, new Comparator<Task>(){
+            public int compare(Task t1, Task t2){
+                return (t2.yearDue > t1.yearDue) ? 1 : -1;
+            }
+        });
+        return tasks;
+
     }
 
 }
@@ -48,6 +52,7 @@ public class agenda {
 
   //displays each task; takes in the list of tasks
   public static void displayTasks(Task[] tasks) {
+    tasks = Task.sortTasks(tasks);
       if(tasks.length > 1) {
         for(int i = 0; i < tasks.length - 1; i ++) {
           System.out.println(tasks[i].deadlineDate + " at " + tasks[i].deadlineTime + " - " + tasks[i].name);
@@ -107,10 +112,6 @@ public class agenda {
       System.out.println(tasks[0].name);
 
       home(scnr, tasks);
-    }
-
-    if(optionChosen == 2) {
-      tasks[0].getTimeDue();
     }
     //exit program
       return;
