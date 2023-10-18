@@ -1,7 +1,8 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 //Task Class
-class Task implements Comparable<Task>{
+class Task{
     public String name;
     public String description;
     public String deadlineDate;
@@ -29,12 +30,27 @@ class Task implements Comparable<Task>{
     }
 
     public static Task[] sortTasks(Task[] tasks) {
-        Collections.sort(tasks, new Comparator<Task>(){
-            public int compare(Task t1, Task t2){
-                return (t2.yearDue > t1.yearDue) ? 1 : -1;
+        Task[] sortedTasks = new Task[tasks.length];
+        //copy tasks to new array
+        for(int i = 0; i < tasks.length-1; i ++) {
+          sortedTasks[i] = new Task(tasks[i].name, tasks[i].description, tasks[i].deadlineDate, tasks[i].deadlineTime);
+          sortedTasks[i].getTimeDue();
+          System.out.println(sortedTasks[i].yearDue);
+        }
+
+
+        //selection sort tasks by year
+        for(int i = 0; i < sortedTasks.length-1; i ++) {
+          for(int j = i; j < sortedTasks.length-1; j ++) {
+            if(sortedTasks[j].yearDue < sortedTasks[i].yearDue) {
+              Task temporary = tasks[i];
+              sortedTasks[i] = sortedTasks[j];
+              sortedTasks[j] = temporary;
             }
-        });
-        return tasks;
+          }
+        }
+
+        return sortedTasks;
 
     }
 
@@ -52,7 +68,10 @@ public class agenda {
 
   //displays each task; takes in the list of tasks
   public static void displayTasks(Task[] tasks) {
-    tasks = Task.sortTasks(tasks);
+
+      if(tasks.length > 2) {
+        tasks = Task.sortTasks(tasks);
+      }
       if(tasks.length > 1) {
         for(int i = 0; i < tasks.length - 1; i ++) {
           System.out.println(tasks[i].deadlineDate + " at " + tasks[i].deadlineTime + " - " + tasks[i].name);
