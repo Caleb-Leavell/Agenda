@@ -32,23 +32,41 @@ class Task{
     public static Task[] sortTasks(Task[] tasks) {
         Task[] sortedTasks = new Task[tasks.length];
         //copy tasks to new array
-        for(int i = 0; i < tasks.length-1; i ++) {
+        for(int i = 0; i < tasks.length; i ++) {
           sortedTasks[i] = new Task(tasks[i].name, tasks[i].description, tasks[i].deadlineDate, tasks[i].deadlineTime);
           sortedTasks[i].getTimeDue();
-          System.out.println(sortedTasks[i].yearDue);
         }
 
 
         //selection sort tasks by year
         for(int i = 0; i < sortedTasks.length-1; i ++) {
+
+          int min = i;
+          for(int j = i + 1; j < sortedTasks.length; j ++) {
+            if(sortedTasks[j].yearDue < sortedTasks[min].yearDue) {
+              min = j;
+            }
+          }
+
+          if(min != i) {
+              Task temporary = tasks[i];
+              sortedTasks[i] = sortedTasks[min];
+              sortedTasks[min] = temporary;
+          }
+        }
+         
+        /* TEMPORARILY REMOVED
+        //selection sort tasks by month
+        for(int i = 0; i < sortedTasks.length-1; i ++) {
           for(int j = i; j < sortedTasks.length-1; j ++) {
-            if(sortedTasks[j].yearDue < sortedTasks[i].yearDue) {
+            if(sortedTasks[j].monthDue < sortedTasks[i].monthDue && sortedTasks[j].yearDue == sortedTasks[i].yearDue) {
               Task temporary = tasks[i];
               sortedTasks[i] = sortedTasks[j];
               sortedTasks[j] = temporary;
             }
           }
         }
+        */
 
         return sortedTasks;
 
@@ -60,8 +78,18 @@ public class agenda {
   public static void main(String[] argv) {
     Scanner scnr = new Scanner(System.in);
 
-    //tasks list
-    Task[] tasks = new Task[1];
+    //tasks list (it has initial tasks for testing purposes)
+    Task[] tasks = {
+      //Task(String name, String description, String deadlineDate, String deadlineTime)
+      new Task("Make Agenda", "Make the Agenda App", "12/25/2023", "3:00 pm"),
+      new Task("Math Homework", "Do my Calc II HW", "10/22/2023", "3:00 pm"),
+      new Task("Internship", "Get a Computer Science Internship", "5/1/2024", "12:00 am"),
+      new Task("WWII", "The Second World War", "1/1/1935", "12:00 am"),
+      new Task("Christmas 2022", "Christmas in 2022", "12/25/2022", "12:00 am"),
+      new Task("November Date", "A random time in November", "11/10/2023", "12:00 am"),
+      new Task("November Date 2", "Novemberrrr", "11/10/2023", "11:59 pm"),
+      new Task("November Date 3", "Novemberrrrrrrrrr", "11/10/2023", "2:00 pm")
+    };
 
     home(scnr, tasks);
   }
@@ -73,7 +101,7 @@ public class agenda {
         tasks = Task.sortTasks(tasks);
       }
       if(tasks.length > 1) {
-        for(int i = 0; i < tasks.length - 1; i ++) {
+        for(int i = 0; i < tasks.length; i ++) {
           System.out.println(tasks[i].deadlineDate + " at " + tasks[i].deadlineTime + " - " + tasks[i].name);
           System.out.println("  " + tasks[i].description);
         }
@@ -88,7 +116,7 @@ public class agenda {
     int optionChosen;
 
     //Display Home Screen
-    System.out.println("\nAGENDA\n\nInput Options:\n-View Current Tasks: 0\n-Add a new Task: 1\n-Mark a Task as Completed: 2\n-Exit: 4");
+    System.out.println("\n\n\n\n\n\n\n\nAGENDA\n\nInput Options:\n-View Current Tasks: 0\n-Add a new Task: 1\n-Mark a Task as Completed: 2\n-Exit: 4");
     
     //Get Input
     System.out.print("Choose Option: ");
@@ -110,6 +138,18 @@ public class agenda {
     //add task
     if(optionChosen == 1) {
       scnr.nextLine();
+
+      //add empty index
+      Task[] tempList = new Task[tasks.length + 1];
+      for(int i = 0; i < tasks.length; i ++) {
+        tempList[i] = tasks[i];
+      }
+      tasks = new Task[tempList.length];
+      for(int i = 0; i < tasks.length; i ++) {
+        tasks[i] = tempList[i];
+      }
+
+      //fill empty index with user input
       tasks[tasks.length - 1] = new Task("", "", "", "");
       System.out.print("Task Name: ");
       tasks[tasks.length - 1].name = scnr.nextLine();
@@ -119,16 +159,6 @@ public class agenda {
       tasks[tasks.length - 1].deadlineTime = scnr.nextLine();
       System.out.print("Task Description: ");
       tasks[tasks.length - 1].description = scnr.nextLine();
-
-      Task[] tempList = new Task[tasks.length+1];
-      for(int i = 0; i < tasks.length; i ++) {
-        tempList[i] = tasks[i];
-      }
-      tasks = new Task[tempList.length];
-      for(int i = 0; i < tasks.length; i ++) {
-        tasks[i] = tempList[i];
-      }
-      System.out.println(tasks[0].name);
 
       home(scnr, tasks);
     }
