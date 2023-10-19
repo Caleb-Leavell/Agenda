@@ -37,6 +37,7 @@ class Task{
           sortedTasks[i].getTimeDue();
         }
 
+        //NOTE: I would like to improve some of this repeated code later
 
         //selection sort tasks by year
         for(int i = 0; i < sortedTasks.length-1; i ++) {
@@ -72,6 +73,22 @@ class Task{
           
         }
         
+        //selection sort tasks by day
+        for(int i = 0; i < sortedTasks.length-1; i ++) {
+
+          int min = i;
+          for(int j = i + 1; j < sortedTasks.length; j ++) {
+            if(sortedTasks[j].dayDue < sortedTasks[min].dayDue && sortedTasks[j].monthDue == sortedTasks[i].monthDue) {
+              min = j;
+            }
+          }
+
+          
+            Task temporary = sortedTasks[i];
+            sortedTasks[i] = sortedTasks[min];
+            sortedTasks[min] = temporary;
+          
+        }
 
         return sortedTasks;
 
@@ -91,9 +108,9 @@ public class agenda {
       new Task("Internship", "Get a Computer Science Internship", "5/1/2024", "12:00 am"),
       new Task("WWII", "The Second World War", "1/1/1935", "12:00 am"),
       new Task("Christmas 2022", "Christmas in 2022", "12/25/2022", "12:00 am"),
-      new Task("November Date", "A random time in November", "11/10/2023", "12:00 am"),
+      new Task("November Date", "A random time in November", "11/11/2023", "12:00 am"),
       new Task("November Date 2", "Novemberrrr", "11/10/2023", "11:59 pm"),
-      new Task("November Date 3", "Novemberrrrrrrrrr", "11/10/2023", "2:00 pm")
+      new Task("November Date 3", "Novemberrrrrrrrrr", "11/13/2023", "2:00 pm")
     };
 
     home(scnr, tasks);
