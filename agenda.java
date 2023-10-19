@@ -44,15 +44,16 @@ class Task{
           int min = i;
           for(int j = i + 1; j < sortedTasks.length; j ++) {
             if(sortedTasks[j].yearDue < sortedTasks[min].yearDue) {
+              System.out.println(sortedTasks[j].yearDue + "  " + sortedTasks[min].yearDue);
               min = j;
             }
           }
 
-          if(min != i) {
-              Task temporary = tasks[i];
-              sortedTasks[i] = sortedTasks[min];
-              sortedTasks[min] = temporary;
-          }
+          
+            Task temporary = sortedTasks[i];
+            sortedTasks[i] = sortedTasks[min];
+            sortedTasks[min] = temporary;
+          
         }
          
         /* TEMPORARILY REMOVED
