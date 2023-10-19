@@ -44,7 +44,6 @@ class Task{
           int min = i;
           for(int j = i + 1; j < sortedTasks.length; j ++) {
             if(sortedTasks[j].yearDue < sortedTasks[min].yearDue) {
-              System.out.println(sortedTasks[j].yearDue + "  " + sortedTasks[min].yearDue);
               min = j;
             }
           }
@@ -56,18 +55,23 @@ class Task{
           
         }
          
-        /* TEMPORARILY REMOVED
         //selection sort tasks by month
         for(int i = 0; i < sortedTasks.length-1; i ++) {
-          for(int j = i; j < sortedTasks.length-1; j ++) {
-            if(sortedTasks[j].monthDue < sortedTasks[i].monthDue && sortedTasks[j].yearDue == sortedTasks[i].yearDue) {
-              Task temporary = tasks[i];
-              sortedTasks[i] = sortedTasks[j];
-              sortedTasks[j] = temporary;
+
+          int min = i;
+          for(int j = i + 1; j < sortedTasks.length; j ++) {
+            if(sortedTasks[j].monthDue < sortedTasks[min].monthDue && sortedTasks[j].yearDue == sortedTasks[i].yearDue) {
+              min = j;
             }
           }
+
+          
+            Task temporary = sortedTasks[i];
+            sortedTasks[i] = sortedTasks[min];
+            sortedTasks[min] = temporary;
+          
         }
-        */
+        
 
         return sortedTasks;
 
@@ -104,7 +108,7 @@ public class agenda {
       if(tasks.length > 1) {
         for(int i = 0; i < tasks.length; i ++) {
           System.out.println(tasks[i].deadlineDate + " at " + tasks[i].deadlineTime + " - " + tasks[i].name);
-          System.out.println("  " + tasks[i].description);
+          System.out.println("  " + tasks[i].description + "\n");
         }
       }
       else {
