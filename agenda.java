@@ -88,19 +88,7 @@ public class agenda {
     Scanner scnr = new Scanner(System.in);
 
     //tasks list (it has initial tasks for testing purposes)
-    Task[] tasks = {
-      //Task(String name, String description, String deadlineDate, String deadlineTime)
-      new Task("Make Agenda", "Make the Agenda App", "12/25/2023", "3:00 pm"),
-      new Task("Math Homework", "Do my Calc II HW", "10/22/2023", "3:00 pm"),
-      new Task("Internship", "Get a Computer Science Internship", "5/1/2024", "12:00 am"),
-      new Task("WWII", "The Second World War", "1/1/1935", "12:00 am"),
-      new Task("Christmas 2022", "Christmas in 2022", "12/25/2022", "12:00 am"),
-      new Task("November Date", "A random time in November", "11/11/2023", "12:00 am"),
-      new Task("November Date 2", "Novemberrrr", "11/10/2023", "11:59 pm"),
-      new Task("November Date 3", "Novemberrrrrrrrrr", "11/13/2023", "2:00 pm"),
-      new Task("November Date 4", "Novembo", "11/13/2023", "1:00 pm"),
-      new Task("November Date 5", "Novemberlalalalalal", "11/13/2023", "2:00 am")
-    };
+    Task[] tasks = new Task[0];
 
     home(scnr, tasks);
   }
@@ -108,10 +96,10 @@ public class agenda {
   //displays each task; takes in the list of tasks
   public static void displayTasks(Task[] tasks) {
 
-      if(tasks.length > 2) {
+      if(tasks.length > 1) {
         tasks = Task.sortTasks(tasks);
       }
-      if(tasks.length > 1) {
+      if(tasks.length > 0) {
         for(int i = 0; i < tasks.length; i ++) {
           System.out.println(tasks[i].deadlineDate + " at " + tasks[i].deadlineTime + " - " + tasks[i].name);
           System.out.println("  " + tasks[i].description + "\n");
