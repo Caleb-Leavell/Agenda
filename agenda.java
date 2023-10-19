@@ -57,8 +57,6 @@ class Task{
           sortedTasks[i].getTimeDue();
         }
 
-        //NOTE: I would like to improve some of this repeated code later
-
         //selection sort tasks by time due (see getTimeDue() for how time due is calculated)
         for(int i = 0; i < sortedTasks.length-1; i ++) {
 
@@ -110,6 +108,36 @@ public class agenda {
       }
   }
 
+  public static Task[] addTask(Scanner scnr, Task[] tasks) {
+
+      scnr.nextLine();
+
+      //add empty index
+      Task[] tempList = new Task[tasks.length + 1];
+      for(int i = 0; i < tasks.length; i ++) {
+        tempList[i] = tasks[i];
+      }
+
+      Task[] newTasks = new Task[tempList.length];
+
+      for(int i = 0; i < newTasks.length; i ++) {
+        newTasks[i] = tempList[i];
+      }
+
+      //fill empty index with user input
+      newTasks[newTasks.length - 1] = new Task("", "", "", "");
+      System.out.print("Task Name: ");
+      newTasks[newTasks.length - 1].name = scnr.nextLine();
+      System.out.print("Date Due (mm/dd/yyyy): ");
+      newTasks[newTasks.length - 1].deadlineDate = scnr.nextLine();
+      System.out.print("Time Due (hh:mm am/pm): ");
+      newTasks[newTasks.length - 1].deadlineTime = scnr.nextLine();
+      System.out.print("Task Description: ");
+      newTasks[newTasks.length - 1].description = scnr.nextLine();
+
+      return newTasks;
+  }
+
   //home + get user input, takes in scnr and list of tasks
   public static void home(Scanner scnr, Task[] tasks) {
     int optionChosen;
@@ -136,29 +164,7 @@ public class agenda {
 
     //add task
     if(optionChosen == 1) {
-      scnr.nextLine();
-
-      //add empty index
-      Task[] tempList = new Task[tasks.length + 1];
-      for(int i = 0; i < tasks.length; i ++) {
-        tempList[i] = tasks[i];
-      }
-      tasks = new Task[tempList.length];
-      for(int i = 0; i < tasks.length; i ++) {
-        tasks[i] = tempList[i];
-      }
-
-      //fill empty index with user input
-      tasks[tasks.length - 1] = new Task("", "", "", "");
-      System.out.print("Task Name: ");
-      tasks[tasks.length - 1].name = scnr.nextLine();
-      System.out.print("Date Due (mm/dd/yyyy): ");
-      tasks[tasks.length - 1].deadlineDate = scnr.nextLine();
-      System.out.print("Time Due (hh:mm am/pm): ");
-      tasks[tasks.length - 1].deadlineTime = scnr.nextLine();
-      System.out.print("Task Description: ");
-      tasks[tasks.length - 1].description = scnr.nextLine();
-
+      tasks = addTask(scnr, tasks);
       home(scnr, tasks);
     }
     //exit program
