@@ -12,6 +12,7 @@ class Task{
     public int dayDue;
     public int monthDue;
     public int yearDue;
+    public long timeDue;
 
     public Task(String name, String description, String deadlineDate, String deadlineTime) {
       this.name = name;
@@ -22,11 +23,30 @@ class Task{
     public void getTimeDue() {
       int timeColonIndex = this.deadlineTime.indexOf(':');
       int[] dateSlashIndicies = {deadlineDate.indexOf('/'), deadlineDate.indexOf('/', deadlineDate.indexOf('/') + 1)};
+
+      //hour due
       this.hourDue = Integer.parseInt(this.deadlineTime.substring(0,timeColonIndex));
+      String amOrPm = this.deadlineTime.substring(deadlineTime.indexOf(' ', timeColonIndex), deadlineTime.length());
+      if(amOrPm.contains("pm") || amOrPm.contains("PM") || amOrPm.contains ("Pm")) {
+        hourDue += 12;
+      }
+
+      //minute due
       this.minuteDue = Integer.parseInt(this.deadlineTime.substring(timeColonIndex + 1, deadlineTime.indexOf(' ', timeColonIndex)));
+
+      //month due
       this.monthDue = Integer.parseInt(this.deadlineDate.substring(0, dateSlashIndicies[0]));
+
+      //day due
       this.dayDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[0] + 1, dateSlashIndicies[1]));
+
+      //year due
       this.yearDue = Integer.parseInt(this.deadlineDate.substring(dateSlashIndicies[1] + 1, deadlineDate.length()));
+
+      //time due boiled down to a code
+      //sorting based on this rather than year then month then day etc. saves a lot of processing time
+            this.timeDue = this.minuteDue + (this.hourDue * 100) +  (this.dayDue * 10000) + (this.monthDue * 1000000) + (this.yearDue * 100000000);
+      
     }
 
     public static Task[] sortTasks(Task[] tasks) {
@@ -39,12 +59,12 @@ class Task{
 
         //NOTE: I would like to improve some of this repeated code later
 
-        //selection sort tasks by year
+        //selection sort tasks by time due (see getTimeDue() for how time due is calculated)
         for(int i = 0; i < sortedTasks.length-1; i ++) {
 
           int min = i;
           for(int j = i + 1; j < sortedTasks.length; j ++) {
-            if(sortedTasks[j].yearDue < sortedTasks[min].yearDue) {
+            if(sortedTasks[j].timeDue < sortedTasks[min].timeDue) {
               min = j;
             }
           }
@@ -55,40 +75,7 @@ class Task{
             sortedTasks[min] = temporary;
           
         }
-         
-        //selection sort tasks by month
-        for(int i = 0; i < sortedTasks.length-1; i ++) {
 
-          int min = i;
-          for(int j = i + 1; j < sortedTasks.length; j ++) {
-            if(sortedTasks[j].monthDue < sortedTasks[min].monthDue && sortedTasks[j].yearDue == sortedTasks[i].yearDue) {
-              min = j;
-            }
-          }
-
-          
-            Task temporary = sortedTasks[i];
-            sortedTasks[i] = sortedTasks[min];
-            sortedTasks[min] = temporary;
-          
-        }
-        
-        //selection sort tasks by day
-        for(int i = 0; i < sortedTasks.length-1; i ++) {
-
-          int min = i;
-          for(int j = i + 1; j < sortedTasks.length; j ++) {
-            if(sortedTasks[j].dayDue < sortedTasks[min].dayDue && sortedTasks[j].monthDue == sortedTasks[i].monthDue) {
-              min = j;
-            }
-          }
-
-          
-            Task temporary = sortedTasks[i];
-            sortedTasks[i] = sortedTasks[min];
-            sortedTasks[min] = temporary;
-          
-        }
 
         return sortedTasks;
 
@@ -110,7 +97,9 @@ public class agenda {
       new Task("Christmas 2022", "Christmas in 2022", "12/25/2022", "12:00 am"),
       new Task("November Date", "A random time in November", "11/11/2023", "12:00 am"),
       new Task("November Date 2", "Novemberrrr", "11/10/2023", "11:59 pm"),
-      new Task("November Date 3", "Novemberrrrrrrrrr", "11/13/2023", "2:00 pm")
+      new Task("November Date 3", "Novemberrrrrrrrrr", "11/13/2023", "2:00 pm"),
+      new Task("November Date 4", "Novembo", "11/13/2023", "1:00 pm"),
+      new Task("November Date 5", "Novemberlalalalalal", "11/13/2023", "2:00 am")
     };
 
     home(scnr, tasks);
